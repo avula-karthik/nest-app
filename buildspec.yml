@@ -20,11 +20,11 @@ phases:
       - zip -r ../nestjs-app.zip ./
       - echo "Uploading deployment package to Elastic Beanstalk"
       - aws elasticbeanstalk create-application-version \
-          --application-name "MyNestJSApp" \
+          --application-name "test" \
           --version-label "build-$CODEBUILD_BUILD_ID" \
           --source-bundle S3Bucket=my-s3-bucket,S3Key=nestjs-app.zip
       - aws elasticbeanstalk update-environment \
-          --application-name "MyNestJSApp" \
+          --application-name "test" \
           --environment-name "MyNestJSEnvironment" \
           --version-label "build-$CODEBUILD_BUILD_ID"
 
