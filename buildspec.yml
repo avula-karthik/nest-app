@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22 # Specify the Node.js version
+    commands:
+      - echo "Installing dependencies"
+      - npm install -g @nestjs/cli
+      - npm install
+
+  build:
+    commands:
+      - echo "Building the application"
+      - npm run build
+
+  post_build:
+    commands:
+      - echo "Preparing deployment package"
+      - zip -r ../nestjs-app.zip ./
+      - echo "Uploading deployment package to Elastic Beanstalk"
+      - aws elasticbeanstalk create-application-version \
+          --application-name "MyNestJSApp" \
+          --version-label "build-$CODEBUILD_BUILD_ID" \
+          --source-bundle S3Bucket=my-s3-bucket,S3Key=nestjs-app.zip
+      - aws elasticbeanstalk update-environment \
+          --application-name "MyNestJSApp" \
+          --environment-name "MyNestJSEnvironment" \
+          --version-label "build-$CODEBUILD_BUILD_ID"
+
+artifacts:
+  files:
+    - nestjs-app.zip
+    - "**/*"
+  discard-paths: yes
