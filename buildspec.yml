@@ -5,17 +5,29 @@ phases:
     runtime-versions:
       nodejs: 22 # Specify the Node.js version
     commands:
-      - echo "Installing dependencies"
-      - npm install -g @nestjs/cli
-      - npm install
-
+      - echo "Installing system dependencies..."
+      - echo "step install" > /home/ec2-user/file_logs.txt
+      - npm install -g npm@latest # Update npm to the latest version
+  pre_build:
+    commands:
+      - echo "Running pre-build steps..."
+      - npm install -g @nestjs/cli # Install NestJS CLI globally
+      - npm install # Install project dependencies
+      - echo "pre build complete" >> /home/ec2-user/file_logs.txt
+      - echo "Pre-build completed."
   build:
     commands:
-      - echo "Building the application"
-      - npm run build
+      - echo "Building the NestJS application..."
+      - npm run build # Build the application
+      - echo "build complte" >> /home/ec2-user/file_logs.txt
+      - echo "Build phase completed."
+  post_build:
+    commands:
+      - echo "Post-build steps..."
+      - echo "post build" >> /home/ec2-user/file_logs.txt
+      - echo "No post-build commands defined."
 
 artifacts:
   files:
-    - nestjs-app.zip
-    - "**/*"
-  discard-paths: yes
+    - "**/*" # Include all files in the artifact (customize as needed)
+  base-directory: dist # Output directory for NestJS builds
