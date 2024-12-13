@@ -6,7 +6,6 @@ phases:
       nodejs: 22 # Specify the Node.js version
     commands:
       - echo "Installing system dependencies..."
-      - echo "step install" > /home/ec2-user/file_logs.txt
       - npm install -g npm@latest # Update npm to the latest version
   pre_build:
     commands:
@@ -16,18 +15,15 @@ phases:
       - yum update -y 
       - yum upgrade -y 
       - yum install poppler-utils -y
-      - echo "pre build complete with poppler" >> /home/ec2-user/file_logs.txt
       - echo "Pre-build completed."
   build:
     commands:
       - echo "Building the NestJS application..."
       - npm run build # Build the application
-      - echo "build complte" >> /home/ec2-user/file_logs.txt
       - echo "Build phase completed."
   post_build:
     commands:
       - echo "Post-build steps..."
-      - echo "post build" >> /home/ec2-user/file_logs.txt
       - echo "No post-build commands defined."
 
 artifacts:
