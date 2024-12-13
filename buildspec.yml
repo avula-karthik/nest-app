@@ -27,7 +27,3 @@ phases:
   post_build:
     commands:
       - echo Post build step
-
-artifacts:
-  files:
-    - deploy.zip
