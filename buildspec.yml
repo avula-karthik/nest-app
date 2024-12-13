@@ -6,16 +6,16 @@ phases:
       nodejs: 22
     commands:
       - echo "Installing system dependencies..."
-      - npm install -g npm@latest
+      - sudo npm install -g npm@latest
   pre_build:
     commands:
       - echo "Running pre-build steps..."
-      - npm install -g @nestjs/cli
+      - sudo npm install -g @nestjs/cli
       - export PATH=$PATH:$(npm bin -g)
       - npm install
-      - yum update -y
-      - yum upgrade -y
-      - yum install poppler-utils -y
+      - sudo yum update -y
+      - sudo yum upgrade -y
+      - sudo yum install poppler-utils -y
       - echo "Pre-build completed."
   build:
     commands:
