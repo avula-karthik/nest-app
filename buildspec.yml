@@ -26,11 +26,7 @@ phases:
 
   post_build:
     commands:
-      - echo Preparing application for deployment...
-      - echo "Deploying to Elastic Beanstalk..."
-      - zip -r deploy.zip dist/
-      - aws elasticbeanstalk create-application-version --application-name app --version-label v1 
-      - aws elasticbeanstalk update-environment --environment-name App-env --version-label v1
+      - echo Post build step
 
 artifacts:
   files:
