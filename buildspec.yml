@@ -1,32 +1,32 @@
+---
 version: 0.2
-
 phases:
   install:
     runtime-versions:
-      nodejs: 22 # Specify the Node.js version
+      nodejs: 22
     commands:
       - echo "Installing system dependencies..."
-      - npm install -g npm@latest # Update npm to the latest version
+      - npm install -g npm@latest
   pre_build:
     commands:
       - echo "Running pre-build steps..."
-      - npm install -g @nestjs/cli # Install NestJS CLI globally
-      - npm install # Install project dependencies
-      - yum update -y 
-      - yum upgrade -y 
+      - npm install -g @nestjs/cli
+      - export PATH=$PATH:$(npm bin -g)
+      - npm install
+      - yum update -y
+      - yum upgrade -y
       - yum install poppler-utils -y
       - echo "Pre-build completed."
   build:
     commands:
       - echo "Building the NestJS application..."
-      - npm run build # Build the application
+      - npm run build
       - echo "Build phase completed."
   post_build:
     commands:
       - echo "Post-build steps..."
       - echo "No post-build commands defined."
-
 artifacts:
   files:
-    - "**/*" # Include all files in the artifact (customize as needed)
-  base-directory: dist # Output directory for NestJS builds
+    - "**/*"
+  base-directory: dist
