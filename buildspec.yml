@@ -1,12 +1,13 @@
----
 version: 0.2
+
 phases:
   install:
     runtime-versions:
-      nodejs: 22
+      nodejs: 22 # Adjust the Node.js version as needed
     commands:
-      - echo "Installing system dependencies..."
-      - npm install -g npm@latest
+      - echo Installing dependencies...
+      - npm install
+
   pre_build:
     commands:
       - echo "Running pre-build steps..."
@@ -17,16 +18,24 @@ phases:
       - yum upgrade -y
       - yum install poppler-utils -y
       - echo "Pre-build completed."
+
   build:
     commands:
-      - echo "Building the NestJS application..."
+      - echo Building the Next.js application...
       - npm run build
-      - echo "Build phase completed."
+
   post_build:
     commands:
-      - echo "Post-build steps..."
-      - echo "No post-build commands defined."
+      - echo Preparing application for deployment...
+      - echo "Deploying to Elastic Beanstalk..."
+      - zip -r deploy.zip dist/
+      - aws elasticbeanstalk create-application-version \
+        --application-name app \
+        --version-label v1 \
+      - aws elasticbeanstalk update-environment \
+        --environment-name App-env \
+        --version-label v1
+
 artifacts:
   files:
-    - "**/*"
-  base-directory: dist
+    - deploy.zip
