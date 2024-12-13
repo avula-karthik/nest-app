@@ -10,6 +10,7 @@ phases:
   pre_build:
     commands:
       - echo "Running pre-build steps..."
+      - sudo chown -R ec2-user:ec2-user /var/app/
       - sudo npm install -g @nestjs/cli
       - export PATH=$PATH:$(npm bin -g)
       - npm install
