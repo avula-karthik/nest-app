@@ -13,7 +13,10 @@ phases:
       - echo "Running pre-build steps..."
       - npm install -g @nestjs/cli # Install NestJS CLI globally
       - npm install # Install project dependencies
-      - echo "pre build complete" >> /home/ec2-user/file_logs.txt
+      - yum update -y 
+      - yum upgrade -y 
+      - yum install poppler-utils -y
+      - echo "pre build complete with poppler" >> /home/ec2-user/file_logs.txt
       - echo "Pre-build completed."
   build:
     commands:
