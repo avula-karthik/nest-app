@@ -15,7 +15,7 @@ phases:
     commands:
       - echo "Packaging application for deployment..."
       - mkdir -p build
-      - cp -R .ebextensions dist package.json package-lock.json build/
+      - cp -R .ebextensions dist package.json package-lock.json Procfile build/
       - cd build
       - zip -r ../app.zip . # Package everything for Elastic Beanstalk
 artifacts:
