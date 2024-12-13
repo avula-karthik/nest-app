@@ -3,27 +3,21 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 22 # Adjust the Node.js version as needed
+      nodejs: 22 # Adjust the version to your app's requirements
     commands:
-      - echo Installing dependencies...
+      - echo "Installing dependencies..."
       - npm install
-
-  pre_build:
-    commands:
-      - echo "Running pre-build steps..."
-      - npm install -g @nestjs/cli
-      - export PATH=$PATH:$(npm bin -g)
-      - npm install
-      - yum update -y
-      - yum upgrade -y
-      - yum install poppler-utils -y
-      - echo "Pre-build completed."
-
   build:
     commands:
-      - echo Building the Next.js application...
-      - npm run build
-
+      - echo "Building the NestJS application..."
+      - npm run build # Compiles TypeScript to JavaScript
   post_build:
     commands:
-      - echo Post build step
+      - echo "Packaging application for deployment..."
+      - mkdir -p build
+      - cp -R .ebextensions dist package.json package-lock.json Procfile build/
+      - cd build
+      - zip -r ../app.zip . # Package everything for Elastic Beanstalk
+artifacts:
+  files:
+    - app.zip
