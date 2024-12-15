@@ -3,19 +3,17 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 22 # Adjust the version to your app's requirements
+      nodejs: 22.x
     commands:
       - echo "Installing dependencies..."
-      - yum update -y
-      - yum install poppler-utils -y
       - npm ci
   build:
     commands:
-      - echo "Building the NestJS application..."
-      - npm run build # Compiles TypeScript to JavaScript
+      - echo "Building the app..."
+      - npm run build
 artifacts:
   files:
-    - '**/*'
+    - "**/*"
 cache:
   paths:
     - "node_modules/**/*"
