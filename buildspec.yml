@@ -11,13 +11,6 @@ phases:
     commands:
       - echo "Building the NestJS application..."
       - npm run build # Compiles TypeScript to JavaScript
-  post_build:
-    commands:
-      - echo "Packaging application for deployment..."
-      - mkdir -p build
-      - cp -R .ebextensions dist package.json package-lock.json Procfile build/
-      - cd build
-      - zip -r ../app.zip . # Package everything for Elastic Beanstalk
 artifacts:
   files:
-    - app.zip
+    - '**/*'
