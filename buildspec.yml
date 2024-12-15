@@ -6,7 +6,9 @@ phases:
       nodejs: 22 # Adjust the version to your app's requirements
     commands:
       - echo "Installing dependencies..."
-      - npm install
+      - yum update -y
+      - yum install poppler-utils -y
+      - npm ci
   build:
     commands:
       - echo "Building the NestJS application..."
@@ -14,3 +16,6 @@ phases:
 artifacts:
   files:
     - '**/*'
+cache:
+  paths:
+    - "node_modules/**/*"
